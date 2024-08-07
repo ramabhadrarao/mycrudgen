@@ -178,7 +178,7 @@ while ($conn->next_result()) {
 $default_data_sql = "
 -- Inserting sample pages
 INSERT INTO `pages` (`page_name`) VALUES 
-('add_page'), ('manage_menu'), ('manage_submenu'), ('manage_users'), ('manage_roles'), ('manage_permissions'), ('manage_role_permissions');
+('manage_page'), ('manage_menu'), ('manage_submenu'), ('manage_users'), ('manage_roles'), ('manage_permissions'), ('manage_role_permissions');
 
 -- Inserting sample menu
 INSERT INTO `menu` (`menu_name`, `page_id`) VALUES
@@ -196,7 +196,7 @@ INSERT INTO `submenu` (`submenu_name`, `menu_id`, `page_id`) VALUES
 
 -- Inserting sample permissions
 INSERT INTO `permissions` (`permission_name`) VALUES 
-('create_add_page'), ('read_add_page'), ('update_add_page'), ('delete_add_page'),
+('create_manage_page'), ('read_manage_page'), ('update_manage_page'), ('delete_manage_page'),
 ('create_manage_menu'), ('read_manage_menu'), ('update_manage_menu'), ('delete_manage_menu'),
 ('create_manage_submenu'), ('read_manage_submenu'), ('update_manage_submenu'), ('delete_manage_submenu'),
 ('create_manage_users'), ('read_manage_users'), ('update_manage_users'), ('delete_manage_users'),
@@ -214,7 +214,7 @@ INSERT INTO `permission_groups` (`group_name`) VALUES
 
 -- Associating permissions with permission groups
 INSERT INTO `permission_group_permissions` (`group_id`, `permission_id`) VALUES
-(1, 1), (1, 2), (1, 3), (1, 4), -- Admin Group permissions for add_page
+(1, 1), (1, 2), (1, 3), (1, 4), -- Admin Group permissions for manage_page
 (1, 5), (1, 6), (1, 7), (1, 8), -- Admin Group permissions for manage_menu
 (1, 9), (1, 10), (1, 11), (1, 12), -- Admin Group permissions for manage_submenu
 (1, 13), (1, 14), (1, 15), (1, 16), -- Admin Group permissions for manage_users
@@ -265,6 +265,9 @@ $tables = [
 ];
 
 $foreignKeys = [
+    'menu' => [
+        'page_id' => ['table' => 'pages', 'key' => 'page_id', 'field' => 'page_name']
+    ],
     'role_permissions' => [
         'role_id' => ['table' => 'roles', 'key' => 'role_id', 'field' => 'role_name'],
         'permission_id' => ['table' => 'permissions', 'key' => 'permission_id', 'field' => 'permission_name']
