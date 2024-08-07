@@ -282,27 +282,42 @@ include('../includes/header.php');
     <?php
     if (isset(\$_GET['page'])) {
         \$page = \$_GET['page'];
-        \$pages = [
-            'add_page',
-            'manage_menu',
-            'manage_submenu',
-            'manage_users',
-            'manage_roles',
-            'manage_permissions',
-            'manage_role_permissions'
-        ];
-        switch (\$page) {
-            case 'change_password':
-                include('change_password.php');
+       
+     switch (\$page) {
+            // case 'change_password':
+            //     include('change_password.php');
+            //     break;
+            case 'add_page':
+                include('manage_pages.php');
                 break;
-            <?php foreach (\$pages as \$page_name): ?>
-            case '<?= \$page_name ?>':
-                include('<?= \$page_name ?>.php');
+            case 'manage_users':
+                include('manage_users.php');
                 break;
-            <?php endforeach; ?>
+            case 'manage_menu':
+                include('manage_menu.php');
+                break;
+            case 'manage_roles':
+                include('manage_roles.php');
+                break;
+            case 'manage_submenu':
+                include('manage_submenu.php');
+                break;
+            case 'manage_permissions':
+                include('manage_permissions.php');
+                break;
+            case 'manage_user_permission_groups':
+                include('manage_user_permission_groups.php');
+                break;
+            case 'manage_permissions_groups':
+                include('manage_permissions_groups.php');
+                break;  
+            case 'manage_permissions_group_permissions':
+                include('manage_permissions_group_permissions.php');
+                break;                          
             default:
                 echo "<p>Page not found.</p>";
         }
+
     } else {
         include('../includes/usermenu.php'); 
     }
@@ -449,25 +464,26 @@ EOD
     );
 
     // Download files from GitHub and place them in the respective directories
-    downloadFile('https://github.com/your-repo-path/CRUDGeneratorv9.php', "$baseDir/generator/CRUDGeneratorv9.php");
-
+    downloadFile('https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/CRUDGeneratorv9.php', "$baseDir/generator/CRUDGeneratorv9.php");
+    // Download files from GitHub and place them in the respective directories
+    downloadFile('https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/create_tables.php', "$baseDir/generator/create_tables.php");
     $cssFiles = [
-        'fileuploadmodel.css' => 'https://github.com/your-repo-path/fileuploadmodel.css',
-        'style.css' => 'https://github.com/your-repo-path/style.css'
+        'fileuploadmodel.css' => 'https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/fileuploadmodel.css',
+        'style.css' => 'https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/style.css'
     ];
     foreach ($cssFiles as $fileName => $url) {
         downloadFile($url, "$baseDir/css/$fileName");
     }
 
     $jsFiles = [
-        'cdn.js' => 'https://github.com/your-repo-path/cdn.js',
-        'image_upload_plugin.js' => 'https://github.com/your-repo-path/image_upload_plugin.js'
+        'cdn.js' => 'https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/cdn.js',
+        'image_upload_plugin.js' => 'https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/image_upload_plugin.js'
     ];
     foreach ($jsFiles as $fileName => $url) {
         downloadFile($url, "$baseDir/js/$fileName");
     }
 
-    downloadFile('https://github.com/your-repo-path/user-icon.gif', "$baseDir/images/user-icon.gif");
+    downloadFile('https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/user-icon.gif', "$baseDir/images/user-icon.gif");
 
     echo "Project '$projectName' created successfully.\n";
 }
