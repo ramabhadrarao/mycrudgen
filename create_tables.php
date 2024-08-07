@@ -68,7 +68,7 @@ $sql = "
 CREATE TABLE `menu` (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_name` varchar(50) NOT NULL,
-  `page_id` int(11) DEFAULT NULL,
+  
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`menu_id`)
@@ -98,15 +98,7 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `role_permissions` (
-  `role_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`role_id`, `permission_id`),
-  FOREIGN KEY (`role_id`) REFERENCES `roles`(`role_id`) ON DELETE CASCADE,
-  FOREIGN KEY (`permission_id`) REFERENCES `permissions`(`permission_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 CREATE TABLE `submenu` (
   `submenu_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -181,8 +173,8 @@ INSERT INTO `pages` (`page_name`) VALUES
 ('manage_pages'), ('manage_menu'), ('manage_submenu'), ('manage_users'), ('manage_roles'), ('manage_permissions'), ('manage_role_permissions');
 
 -- Inserting sample menu
-INSERT INTO `menu` (`menu_name`, `page_id`) VALUES
-('Master Settings', NULL);
+INSERT INTO `menu` (`menu_name`) VALUES
+('Master Settings');
 
 -- Inserting sample submenu
 INSERT INTO `submenu` (`submenu_name`, `menu_id`, `page_id`) VALUES
@@ -252,26 +244,19 @@ createDirectories();
 downloadCRUDGenerator();
 
 $tables = [
-    'menu' => ['menu_id', 'menu_name', 'page_id'],
+    'menu' => ['menu_id', 'menu_name'],
     'pages' => ['page_id', 'page_name'],
-    'permissions' => ['permission_id', 'permission_name'],
-    'roles' => ['role_id', 'role_name'],
-    'role_permissions' => ['role_id', 'permission_id'],
     'submenu' => ['submenu_id', 'submenu_name', 'menu_id', 'page_id'],
     'users' => ['user_id', 'username', 'password', 'role_id'],
+    'permissions' => ['permission_id', 'permission_name'],
+    'roles' => ['role_id', 'role_name'],
     'permission_groups' => ['permission_group_id', 'group_name'],
     'permission_group_permissions' => ['group_id', 'permission_id'],
     'user_permission_groups' => ['user_id', 'group_id']
 ];
 
 $foreignKeys = [
-    'menu' => [
-        'page_id' => ['table' => 'pages', 'key' => 'page_id', 'field' => 'page_name']
-    ],
-    'role_permissions' => [
-        'role_id' => ['table' => 'roles', 'key' => 'role_id', 'field' => 'role_name'],
-        'permission_id' => ['table' => 'permissions', 'key' => 'permission_id', 'field' => 'permission_name']
-    ],
+    
     'submenu' => [
         'menu_id' => ['table' => 'menu', 'key' => 'menu_id', 'field' => 'menu_name'],
         'page_id' => ['table' => 'pages', 'key' => 'page_id', 'field' => 'page_name']

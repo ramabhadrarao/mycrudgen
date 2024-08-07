@@ -55,9 +55,9 @@ function createProject($projectName) {
 return [
     'db' => [
         'host' => 'localhost',
-        'dbname' => 'your_database_name',
-        'user' => 'your_database_user',
-        'password' => 'your_database_password',
+        'dbname' => '$projectName',
+        'user' => 'root',
+        'password' => '',
     ],
 ];
 EOD
@@ -287,7 +287,7 @@ include('../includes/header.php');
             // case 'change_password':
             //     include('change_password.php');
             //     break;
-            case 'add_page':
+              case 'manage_pages':
                 include('manage_pages.php');
                 break;
             case 'manage_users':
@@ -313,7 +313,7 @@ include('../includes/header.php');
                 break;  
             case 'manage_permissions_group_permissions':
                 include('manage_permissions_group_permissions.php');
-                break;                          
+                break;                            
             default:
                 echo "<p>Page not found.</p>";
         }
