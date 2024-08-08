@@ -129,5 +129,11 @@ $uniqueKeys = [
     'states' => ['state_name'],
     'districts' => ['district_name']
 ];
-
+// Generate CRUD files for each table
+foreach ($tables as $table => $columns) {
+    $foreignKeysForTable = $foreignKeys[$table] ?? [];
+    $uniqueKeysForTable = $uniqueKeys[$table] ?? [];
+    $generator = new CRUDGenerator($table, $columns, $foreignKeysForTable, $uniqueKeysForTable);
+    $generator->generateFiles();
+}
 ?>
