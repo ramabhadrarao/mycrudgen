@@ -311,8 +311,8 @@ include('../includes/header.php');
             case 'manage_permission_groups':
                 include('manage_permission_groups.php');
                 break;  
-            case 'manage_permissions_group_permissions':
-                include('manage_permissions_group_permissions.php');
+            case 'manage_permission_group_permissions':
+                include('manage_permission_group_permissions.php');
                 break;                            
             default:
                 echo "<p>Page not found.</p>";
