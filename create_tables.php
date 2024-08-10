@@ -223,7 +223,7 @@ INSERT INTO `permission_group_permissions` (`group_id`, `permission_id`) VALUES
 (1, 13), (1, 14), (1, 15), (1, 16), -- Admin Group permissions for manage_users
 (1, 17), (1, 18), (1, 19), (1, 20), -- Admin Group permissions for manage_roles
 (1, 21), (1, 22), (1, 23), (1, 24), -- Admin Group permissions for manage_permissions
---(1, 25), (1, 26), (1, 27), (1, 28), -- Admin Group permissions for manage_role_permissions
+
 (1, 29), (1, 30), (1, 31), (1, 32), -- Admin Group permissions for manage_permission_groups
 (1, 33), (1, 34), (1, 35), (1, 36), -- Admin Group permissions for manage_permission_group_permissions
 (1, 37), (1, 38), (1, 39), (1, 40), -- Admin Group permissions for manage_user_permission_groups
