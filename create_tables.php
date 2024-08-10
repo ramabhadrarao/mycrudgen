@@ -132,24 +132,29 @@ CREATE TABLE `permission_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `permission_group_permissions` (
+  `permission_group_permissions_id` int(11) NOT NULL AUTO_INCREMENT,
   `group_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`group_id`, `permission_id`),
+  PRIMARY KEY (`permission_group_permissions_id`),
+  UNIQUE KEY `group_permission_unique` (`group_id`, `permission_id`),
   FOREIGN KEY (`group_id`) REFERENCES `permission_groups`(`permission_group_id`) ON DELETE CASCADE,
   FOREIGN KEY (`permission_id`) REFERENCES `permissions`(`permission_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `user_permission_groups` (
+  `user_permission_groups_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`, `group_id`),
+  PRIMARY KEY (`user_permission_groups_id`),
+  UNIQUE KEY `user_group_unique` (`user_id`, `group_id`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE,
   FOREIGN KEY (`group_id`) REFERENCES `permission_groups`(`permission_group_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 ";
 
 // Execute multi-query
@@ -170,7 +175,7 @@ while ($conn->next_result()) {
 $default_data_sql = "
 -- Inserting sample pages
 INSERT INTO `pages` (`page_name`) VALUES 
-('manage_pages'), ('manage_menu'), ('manage_submenu'), ('manage_users'), ('manage_roles'), ('manage_permissions'), ('manage_role_permissions');
+('manage_pages'), ('manage_menu'), ('manage_submenu'), ('manage_users'), ('manage_roles'), ('manage_permissions'), ('manage_role_permissions'), ('manage_permission_groups'), ('manage_permission_group_permissions'), ('manage_user_permission_groups');
 
 -- Inserting sample menu
 INSERT INTO `menu` (`menu_name`) VALUES
@@ -184,7 +189,10 @@ INSERT INTO `submenu` (`submenu_name`, `menu_id`, `page_id`) VALUES
 ('Manage Users', 1, 4), 
 ('Manage Roles', 1, 5), 
 ('Manage Permissions', 1, 6), 
-('Manage Role Permissions', 1, 7);
+('Manage Role Permissions', 1, 7),
+('Manage Permission Groups', 1, 8),
+('Manage Ppermission Group Permissions', 1, 9), 
+('Manage User Permission to Groups', 1, 10);
 
 -- Inserting sample permissions
 INSERT INTO `permissions` (`permission_name`) VALUES 
@@ -194,7 +202,10 @@ INSERT INTO `permissions` (`permission_name`) VALUES
 ('create_manage_users'), ('read_manage_users'), ('update_manage_users'), ('delete_manage_users'),
 ('create_manage_roles'), ('read_manage_roles'), ('update_manage_roles'), ('delete_manage_roles'),
 ('create_manage_permissions'), ('read_manage_permissions'), ('update_manage_permissions'), ('delete_manage_permissions'),
-('create_manage_role_permissions'), ('read_manage_role_permissions'), ('update_manage_role_permissions'), ('delete_manage_role_permissions');
+('create_manage_role_permissions'), ('read_manage_role_permissions'), ('update_manage_role_permissions'), ('delete_manage_role_permissions'),
+('create_manage_permission_groups'), ('read_manage_permission_groups'), ('update_manage_permission_groups'), ('delete_manage_permission_groups'),
+('create_manage_permission_group_permissions'), ('read_manage_permission_group_permissions'), ('update_manage_permission_group_permissions'), ('delete_manage_permission_group_permissions'),
+('create_manage_user_permission_groups'), ('read_manage_user_permission_groups'), ('update_manage_user_permission_groups'), ('delete_manage_user_permission_groups');
 
 -- Inserting sample roles
 INSERT INTO `roles` (`role_name`) VALUES 
@@ -213,6 +224,9 @@ INSERT INTO `permission_group_permissions` (`group_id`, `permission_id`) VALUES
 (1, 17), (1, 18), (1, 19), (1, 20), -- Admin Group permissions for manage_roles
 (1, 21), (1, 22), (1, 23), (1, 24), -- Admin Group permissions for manage_permissions
 (1, 25), (1, 26), (1, 27), (1, 28), -- Admin Group permissions for manage_role_permissions
+(1, 29), (1, 30), (1, 31), (1, 32), -- Admin Group permissions for manage_permission_groups
+(1, 33), (1, 34), (1, 35), (1, 36), -- Admin Group permissions for manage_permission_group_permissions
+(1, 37), (1, 38), (1, 39), (1, 40), -- Admin Group permissions for manage_user_permission_groups
 (2, 2), (2, 6), (2, 10), (2, 14), (2, 18), (2, 22), (2, 26), -- User Group read permissions
 (3, 2), (3, 6), (3, 10), (3, 14), (3, 18), (3, 22), (3, 26), -- Student Group read permissions
 (4, 2), (4, 6), (4, 10), (4, 14), (4, 18), (4, 22), (4, 26); -- Faculty Group read permissions
@@ -251,8 +265,8 @@ $tables = [
     'permissions' => ['permission_id', 'permission_name'],
     'roles' => ['role_id', 'role_name'],
     'permission_groups' => ['permission_group_id', 'group_name'],
-    'permission_group_permissions' => ['group_id', 'permission_id'],
-    'user_permission_groups' => ['user_id', 'group_id']
+    'permission_group_permissions' => ['permission_group_permissions_id','group_id', 'permission_id'],
+    'user_permission_groups' => ['user_permission_groups_id','user_id', 'group_id']
 ];
 
 $foreignKeys = [
