@@ -308,8 +308,8 @@ include('../includes/header.php');
             case 'manage_user_permission_groups':
                 include('manage_user_permission_groups.php');
                 break;
-            case 'manage_permissions_groups':
-                include('manage_permissions_groups.php');
+            case 'manage_permission_groups':
+                include('manage_permission_groups.php');
                 break;  
             case 'manage_permissions_group_permissions':
                 include('manage_permissions_group_permissions.php');
