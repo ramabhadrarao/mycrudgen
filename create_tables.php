@@ -191,7 +191,7 @@ INSERT INTO `submenu` (`submenu_name`, `menu_id`, `page_id`) VALUES
 ('Manage Permissions', 1, 6), 
 ('Manage Role Permissions', 1, 7),
 ('Manage Permission Groups', 1, 8),
-('Manage Ppermission Group Permissions', 1, 9), 
+('Manage Permission Group Permissions', 1, 9), 
 ('Manage User Permission to Groups', 1, 10);
 
 -- Inserting sample permissions
