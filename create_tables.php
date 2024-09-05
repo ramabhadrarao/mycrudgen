@@ -8,7 +8,7 @@ function prompt($prompt_msg) {
 }
 
 function downloadCRUDGenerator() {
-    $url = "https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/CRUDGeneratorv10.php";
+    $url = "https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/CRUDGeneratorv11.php";
     $generatorDir = __DIR__ . "/generator";
     if (!is_dir($generatorDir)) {
         mkdir($generatorDir, 0755, true);
