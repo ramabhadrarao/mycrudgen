@@ -464,7 +464,7 @@ EOD
     );
 
     // Download files from GitHub and place them in the respective directories
-    downloadFile('https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/CRUDGeneratorv9.php', "$baseDir/generator/CRUDGeneratorv9.php");
+    downloadFile('https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/CRUDGeneratorv11.php', "$baseDir/generator/CRUDGeneratorv11.php");
     // Download files from GitHub and place them in the respective directories
     downloadFile('https://raw.githubusercontent.com/ramabhadrarao/mycrudgen/main/create_tables.php', "$baseDir/generator/create_tables.php");
     $cssFiles = [
